@@ -9,15 +9,15 @@
   },
   "main": "index.js",
   "gypfile": true,
-	"engines": {
-		"node": ">=6.14.2"
+  "engines": {
+    "node": ">=6.14.2"
   },
   "os": [
     "darwin"
   ],
   "dependencies": {
     "napi-thread-safe-callback": "0.0.6",
-    "bleno": "^0.5.0",
+    "bleno": "github:notjosh/bleno#inject-bindings",
     "node-addon-api": "^1.1.0",
     "node-pre-gyp": "^0.10.0"
   },
