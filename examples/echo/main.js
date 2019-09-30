@@ -4,6 +4,11 @@ var BlenoPrimaryService = bleno.PrimaryService;
 
 var EchoCharacteristic = require('./characteristic');
 
+
+let echo = new EchoCharacteristic();
+// setTimeout(echo.start,20000)
+//echo.start();
+
 console.log('bleno - echo');
 
 bleno.on('stateChange', function(state) {
@@ -24,9 +29,10 @@ bleno.on('advertisingStart', function(error) {
       new BlenoPrimaryService({
         uuid: 'ec00',
         characteristics: [
-          new EchoCharacteristic()
+          echo
         ]
       })
     ]);
   }
 });
+
