@@ -52,9 +52,7 @@ EchoCharacteristic.prototype.onUnsubscribe = function () {
 
 
 EchoCharacteristic.prototype.sendNotification = function (value) {
-  console.log("sendNotification xxxx");
   if (this._updateValueCallback) {
-    console.log(`Sending notification with value ${value}`);
     var enc = new util.TextEncoder();
     this._updateValueCallback(enc.encode(value));
   }
@@ -68,17 +66,14 @@ EchoCharacteristic.prototype.start = function () {
   //     this._value = "Helo World!";
   //     this.sendNotification(this._value % 0xFFFF);
   // }, 100);
-
-  var text = fs.readFileSync("/Users/vkarunarthne/Desktop/ble-periperhal/bleno-mac/examples/echo/test-data-glove.txt");
-  var arr = [];
-  arr.push(...text)
+  var fs = require('fs');
+  var arr = fs.readFileSync('/Users/visuddha/Desktop/ble/bleno-mac/examples/echo/test-data-glove.txt').toString().split("\n");
   for (let index = 0; index < arr.length; index++) {
-    sleep(100).then(() => {
-      var str = arr[index]+"/0";
-      console.log("Sending: "+str);
-      this.sendNotification(arr[index]+"/0")
-    })
-  }
+    sleep(100);
+    var str = arr[index] + "/0";
+    console.log(index + 1 + " => Sending: " + str);
+    this.sendNotification(arr[index] + "/0")
+  }  
 }
 
 function sleep(time) {
