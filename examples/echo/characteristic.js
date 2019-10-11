@@ -13,6 +13,7 @@ var EchoCharacteristic = function () {
 
   this._value = new Buffer(0);
   this._updateValueCallback = null;
+  this.interval = 0;
 };
 
 util.inherits(EchoCharacteristic, BlenoCharacteristic);
@@ -58,22 +59,24 @@ EchoCharacteristic.prototype.sendNotification = function (value) {
   }
 }
 
-EchoCharacteristic.prototype.start = function () {
+EchoCharacteristic.prototype.start = async function () {
   console.log("Starting counter");
-  // this.handle = setInterval(() => {
-  //   console.log("Interval !!!")
-  //     // this.counter = (this.counter + 1) % 0xFFFF;
-  //     this._value = "Helo World!";
-  //     this.sendNotification(this._value % 0xFFFF);
-  // }, 100);
-  var fs = require('fs');
-  var arr = fs.readFileSync('/Users/visuddha/Desktop/ble/bleno-mac/examples/echo/test-data-glove.txt').toString().split("\n");
-  for (let index = 0; index < arr.length; index++) {
-    sleep(100);
-    var str = arr[index] + "/0";
-    console.log(index + 1 + " => Sending: " + str);
-    this.sendNotification(arr[index] + "/0")
-  }  
+  await sleep(11000)
+  var counter = 0;
+  var payloads = 20;
+  this.handle = setInterval(() => {
+    var str = "v2|1|AWSPERF00001|0|"+new Date().toISOString()+"|98935|4.62|8.52|-3.89|-87.00|61.00|171.00" 
+    if (counter % payloads == 0) {
+      str = "[" + str + ","
+    } else if (counter % payloads == payloads-1) {
+      str = str + "]/0"
+    } else {
+      str = str + ","
+    }
+    this.sendNotification(str)
+    console.log(str)
+    counter++;
+  }, 50);
 }
 
 function sleep(time) {
