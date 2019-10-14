@@ -60,21 +60,20 @@ EchoCharacteristic.prototype.sendNotification = function (value) {
 
 EchoCharacteristic.prototype.start = function () {
   console.log("Starting counter");
-  // this.handle = setInterval(() => {
-  //   console.log("Interval !!!")
-  //     // this.counter = (this.counter + 1) % 0xFFFF;
-  //     this._value = "Helo World!";
-  //     this.sendNotification(this._value % 0xFFFF);
-  // }, 100);
-  var fs = require('fs');
-  var arr = fs.readFileSync('/Users/visuddha/Desktop/ble/bleno-mac/examples/echo/test-data-glove.txt').toString().split("\n");
-  for (let index = 0; index < arr.length; index++) {
-    sleep(100);
-    var str = arr[index] + "/0";
-    console.log(index + 1 + " => Sending: " + str);
-    this.sendNotification(arr[index] + "/0")
-  }  
+  // var fs = require('fs');
+  // var arr = fs.readFileSync('/Users/visuddha/Desktop/ble/bleno-mac/examples/echo/test-data-glove.txt').toString().split("\n");
+  // for (let index = 0; index < arr.length; index++) {
+  //   sleep(100);
+  //   var str = arr[index] + "/0";
+  //   console.log(index + 1 + " => Sending: " + str);
+  //   this.sendNotification(arr[index] + "/0")
+  // }  
+  this.handle = setInterval(() => {
+      this.sendNotification("[v2|1|AWSPERF00001|0|"+new Date().toISOString()+"|98933|9.02|4.27|1.05|-11.00|-28.00|7.00]/0");
+  }, 60000);
 }
+
+00
 
 function sleep(time) {
   return new Promise((resolve) => setTimeout(resolve, time));
